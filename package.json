@@ -1,26 +1,11 @@
 {
-    "name": "replaced-by-user-input",
-    "description": "replaced-by-user-input",
+    "name": "nueda-sqs-lambda",
+    "description": "Simple lambda function to process SQS queue on AWS SAM",
     "version": "0.0.1",
     "private": true,
-    "devDependencies": {
-        "jest": "^29.2.1"
-    },
     "scripts": {
         "unit-test": "echo SUCCESS",
         "integration-test": "echo SUCCESS",
         "static-analysis": "echo SUCCESS"
-    },
-    "jest": {
-        "testMatch": [
-            "**/__tests__/**/*.[jt]s?(x)",
-            "**/?(*.)+(spec|test).[jt]s?(x)",
-            "**/__tests__/**/*.mjs?(x)",
-            "**/?(*.)+(spec|test).mjs?(x)"
-        ],
-        "moduleFileExtensions": [
-            "mjs",
-            "js"
-        ]
     }
 }
