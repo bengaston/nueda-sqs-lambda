@@ -42,15 +42,36 @@ npm run integration-test
 npm run-static analysis 
 ```
 
+## Branching and pipeline rationale 
+
+This is based on a trunk based development strategy where developers will build and test locally, then use a development environment to further test their solutions in an actual AWS environment using a feature branch (likely to follow feature/jira-ticket format). Once a PR has been raised from their feature branch, approved and merged in to the main branch, all automated testing and deployment to a staging environment where potential further manual QA can take place if required. If the all pipeling checks and deployment are successful to the staging environment are successful, a draft release will be created. Once published, the release will be promoted to production provided the build steps and quality checks are passed during the build process.
+
+A set of different environments containing secrets required for production has been created on the github repository. 
 
 
+### Pipeline Steps:
 
-Steps:
+1. Create feature branch off ticket number
+2. Make changes, test locally, write unit tests and integration test. Push feature branch to repo
+3. Test in development environment, ensure code analysis checks pass
+4. If happy, raise a PR to main
+5. Once merged, to main, kick off the staging pipeline
+6. If build and testing pass, create a draft release tag to be published manually
+7. Once release is manually published, kick off the production pipeline
 
-Create feature branch off ticket number
-Test locally, write all tests and once happy push up feature branch
-Test in development environment, ensure code analysis checks pass
-If happy, raise a PR to main
-Once merged, to main, kick off the  staging pipeline
-If all deployments and testing passes, create a release tag to be published manually
-Once release is manually published, run the production pipeline
+## Assumptions 
+1. Some manual testing may be required in each environment
+2. Input from other developers in the form of PRs and release reviews are required
+3. Github repo will alert the required people to review the release. 
+
+## Potential improvements
+
+If this was to be set up in a real world environment and with more time the following potential improvements could be made: 
+
+- Pipeline IAM roles, cloudfront roles and an artifact bucket per environment
+- Create the actual AWS accounts per environment
+- Potentially use one pipeline workflow for all enviornments with conditions on branch/releases
+- Automated pull request raising on feature branches
+- E2E testing with production release rollback on failure
+- Enforcing coding standards and test coverage through the pipeline
+- Add commit history and descriptions to release draft
